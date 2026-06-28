@@ -1,0 +1,34 @@
+# GitHub Actions - Lint Error (ESLint)
+
+Run ID: 34567890
+Repository: example/ts-project
+Branch: feature/payment-service
+Commit: ghi789jkl012
+
+## Job: Lint and Build
+
+### Step: Install Dependencies
+✓ Successfully installed dependencies
+
+### Step: Run ESLint
+2024-01-15 12:30:01 INFO Running ESLint...
+2024-01-15 12:30:03 ERROR src/services/PaymentService.ts
+2024-01-15 12:30:03 ERROR   15:5   error  'amount' is defined but never used   @typescript-eslint/no-unused-vars
+2024-01-15 12:30:03 ERROR   23:1   error  Unexpected console statement         no-console
+2024-01-15 12:30:03 ERROR   31:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2024-01-15 12:30:03 ERROR   45:9   error  'response' is assigned a value but never used  @typescript-eslint/no-unused-vars
+2024-01-15 12:30:03 ERROR
+2024-01-15 12:30:03 ERROR src/utils/validation.ts
+2024-01-15 12:30:03 ERROR   8:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2024-01-15 12:30:03 ERROR   19:5  error  Expected { after 'if' condition         curly
+2024-01-15 12:30:03 ERROR
+2024-01-15 12:30:04 ERROR ✖ 6 problems (6 errors, 0 warnings)
+2024-01-15 12:30:04 ERROR ESLint found too many errors (6 errors). Maximum allowed: 0
+
+### Step: Build TypeScript
+⏭️ Skipped due to lint failure
+
+## Summary
+- Lint: ❌ Failed (6 errors)
+- Build: ⏭️ Skipped
+- Exit Code: 1

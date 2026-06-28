@@ -1,0 +1,42 @@
+# GitHub Actions - Test Failure (Jest)
+
+Run ID: 23456789
+Repository: example/ts-project
+Branch: feature/cart-service
+Commit: def456abc789
+
+## Job: Build and Test
+
+### Step: Install Dependencies
+✓ Successfully installed dependencies
+
+### Step: Build TypeScript
+✓ TypeScript compilation successful
+
+### Step: Run Tests
+2024-01-15 11:05:12 INFO Running test suite...
+2024-01-15 11:05:13 INFO   CartService
+2024-01-15 11:05:14 FAIL   CartService › addItem › should add item to cart
+2024-01-15 11:05:14 ERROR   Expected: 2
+2024-01-15 11:05:14 ERROR   Received: 1
+2024-01-15 11:05:14 ERROR   at Object.<anonymous> (src/__tests__/CartService.test.ts:28:23)
+2024-01-15 11:05:14 ERROR
+2024-01-15 11:05:14 ERROR     26 |   cart.addItem(item)
+2024-01-15 11:05:14 ERROR     27 |   cart.addItem(item)
+2024-01-15 11:05:14 ERROR   > 28 |   expect(cart.itemCount).toBe(2)
+2024-01-15 11:05:14 ERROR        |                      ^
+2024-01-15 11:05:14 ERROR     29 | })
+2024-01-15 11:05:14 ERROR
+2024-01-15 11:05:15 FAIL   CartService › removeItem › should remove item from cart
+2024-01-15 11:05:15 ERROR   Expected cart to have 0 items after removal
+2024-01-15 11:05:15 ERROR   Received: 1
+2024-01-15 11:05:15 ERROR   at Object.<anonymous> (src/__tests__/CartService.test.ts:42:18)
+2024-01-15 11:05:16 INFO
+2024-01-15 11:05:16 ERROR Tests: 2 failed, 15 passed, 17 total
+2024-01-15 11:05:16 ERROR Snapshots: 0 total
+2024-01-15 11:05:16 ERROR Time: 4.215s
+
+## Summary
+- Build: ✅ Passed
+- Tests: ❌ Failed (2 failures)
+- Exit Code: 1

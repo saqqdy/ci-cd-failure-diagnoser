@@ -1,0 +1,42 @@
+# GitHub Actions - Dependency Conflict (npm)
+
+Run ID: 45678901
+Repository: example/ts-project
+Branch: feature/upgrade-deps
+Commit: mno345pqr678
+
+## Job: Install and Build
+
+### Step: Install Dependencies
+2024-01-15 13:45:00 INFO Installing dependencies...
+2024-01-15 13:45:02 WARN npm warn ERESOLVE overriding peer dependency
+2024-01-15 13:45:02 ERROR npm ERR! ERESOLVE could not resolve
+2024-01-15 13:45:02 ERROR npm ERR!
+2024-01-15 13:45:02 ERROR npm ERR! While resolving: @types/react@18.2.0
+2024-01-15 13:45:02 ERROR npm ERR! Found: react@17.0.2
+2024-01-15 13:45:02 ERROR npm ERR! node_modules/react
+2024-01-15 13:45:02 ERROR npm ERR!   react@"^17.0.2" from the root project
+2024-01-15 13:45:02 ERROR npm ERR!
+2024-01-15 13:45:02 ERROR npm ERR! Could not resolve dependency:
+2024-01-15 13:45:02 ERROR npm ERR! peer react@"^18.0.0" from @types/react@18.2.0
+2024-01-15 13:45:02 ERROR npm ERR! node_modules/@types/react
+2024-01-15 13:45:02 ERROR npm ERR!   @types/react@"^18.2.0" from the root project
+2024-01-15 13:45:02 ERROR npm ERR!
+2024-01-15 13:45:02 ERROR npm ERR! Fix the upstream dependency conflict, or retry
+2024-01-15 13:45:02 ERROR npm ERR! this command with --force or --legacy-peer-deps
+2024-01-15 13:45:02 ERROR npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
+2024-01-15 13:45:03 ERROR npm ERR! A complete log of this run can be found in:
+2024-01-15 13:45:03 ERROR npm ERR! /home/runner/.npm/_logs/2024-01-15T13_45_02_123Z-debug-0.log
+2024-01-15 13:45:03 ERROR npm exit code 1
+
+### Step: Build TypeScript
+⏭️ Skipped due to install failure
+
+### Step: Run Tests
+⏭️ Skipped due to install failure
+
+## Summary
+- Install: ❌ Failed (dependency conflict)
+- Build: ⏭️ Skipped
+- Tests: ⏭️ Skipped
+- Exit Code: 1

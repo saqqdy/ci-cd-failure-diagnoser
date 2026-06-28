@@ -1,0 +1,26 @@
+# GitHub Actions - TypeScript 编译错误
+
+Run ID: 12345678
+Repository: example/ts-project
+Branch: feature/user-service
+Commit: abc123def456
+
+## Job: Build and Test
+
+### Step: Install Dependencies
+✓ Successfully installed dependencies
+
+### Step: Build TypeScript
+2024-01-15 10:23:45 INFO Compiling TypeScript files...
+2024-01-15 10:23:45 ERROR src/services/UserService.ts(42,15): error TS2322: Type '{ name: string; }' is missing the following properties from type 'User': userId, email
+2024-01-15 10:23:46 ERROR src/utils/helpers.ts(15,10): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+2024-01-15 10:23:47 ERROR Found 2 errors in 2 files.
+2024-01-15 10:23:47 ERROR TypeScript compilation failed with exit code 1
+
+### Step: Run Tests
+2024-01-15 10:24:00 ERROR Tests skipped due to build failure
+
+## Summary
+- Build: ❌ Failed
+- Tests: ⏭️ Skipped
+- Exit Code: 1

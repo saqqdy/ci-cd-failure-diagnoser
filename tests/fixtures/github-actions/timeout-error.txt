@@ -1,0 +1,48 @@
+# GitHub Actions - Timeout Error
+
+Run ID: 56789012
+Repository: example/ts-project
+Branch: feature/e2e-tests
+Commit: stu901vwx234
+
+## Job: E2E Tests
+
+### Step: Install Dependencies
+✓ Successfully installed dependencies
+
+### Step: Build TypeScript
+✓ TypeScript compilation successful
+
+### Step: Start Test Server
+✓ Test server started on port 3000
+
+### Step: Run E2E Tests
+2024-01-15 14:20:00 INFO Running Cypress E2E tests...
+2024-01-15 14:20:05 INFO   Running: checkout-flow.cy.ts
+2024-01-15 14:20:15 INFO   ✓ Checkout flow - add items (10s)
+2024-01-15 14:20:25 INFO   Running: payment-flow.cy.ts
+2024-01-15 14:20:55 INFO   Waiting for payment gateway response...
+2024-01-15 14:21:25 INFO   Still waiting for payment gateway response...
+2024-01-15 14:21:55 INFO   Still waiting for payment gateway response...
+2024-01-15 14:22:25 WARN  Payment gateway response timeout after 150s
+2024-01-15 14:22:26 ERROR CypressError: Timed out waiting for element '.payment-success' to appear
+2024-01-15 14:22:26 ERROR
+2024-01-15 14:22:26 ERROR Because this error occurred during a 'before each' hook we are skipping the remaining tests in this suite.
+2024-01-15 14:22:26 ERROR at Timeout._onTimeout (node_modules/cypress/lib/cypress/net.js:123:15)
+2024-01-15 14:22:27 ERROR
+2024-01-15 14:22:27 ERROR   1) Payment Flow - credit card payment
+2024-01-15 14:22:27 ERROR
+2024-01-15 14:22:27 ERROR The command timed out after 60000ms:
+2024-01-15 14:22:27 ERROR   cy.get('.payment-success', { timeout: 60000 })
+2024-01-15 14:22:28 ERROR
+2024-01-15 14:22:28 ERROR   (TimedOut)
+2024-01-15 14:22:28 ERROR
+2024-01-15 14:22:30 ERROR Error: The process '/usr/local/bin/node' timed out after 300000ms
+2024-01-15 14:22:30 ERROR ##[error]The action has timed out.
+
+## Summary
+- Install: ✅ Passed
+- Build: ✅ Passed
+- Server: ✅ Started
+- E2E Tests: ❌ Failed (timeout)
+- Exit Code: 1

@@ -1,0 +1,38 @@
+# GitHub Actions - Environment Issue
+
+Run ID: 67890123
+Repository: example/ts-project
+Branch: feature/deploy-prod
+Commit: yza567bcd890
+
+## Job: Deploy to Production
+
+### Step: Install Dependencies
+✓ Successfully installed dependencies
+
+### Step: Build TypeScript
+✓ TypeScript compilation successful
+
+### Step: Run Tests
+✓ All tests passed
+
+### Step: Deploy Application
+2024-01-15 15:30:00 INFO Starting deployment...
+2024-01-15 15:30:02 INFO Loading environment configuration...
+2024-01-15 15:30:02 ERROR Error: Required environment variable DATABASE_URL is not set
+2024-01-15 15:30:02 ERROR   at ConfigLoader.load (src/config/ConfigLoader.ts:15:11)
+2024-01-15 15:30:02 ERROR   at DeployCommand.execute (src/commands/DeployCommand.ts:28:22)
+2024-01-15 15:30:03 ERROR Error: Required environment variable REDIS_URL is not set
+2024-01-15 15:30:03 ERROR   at ConfigLoader.load (src/config/ConfigLoader.ts:18:11)
+2024-01-15 15:30:03 WARN  Warning: NODE_ENV is not set, defaulting to 'development'
+2024-01-15 15:30:03 ERROR Error: API_KEY length is 0, expected non-empty string
+2024-01-15 15:30:03 ERROR   at validateEnv (src/config/validator.ts:7:9)
+2024-01-15 15:30:04 ERROR Deployment failed: missing required environment variables
+2024-01-15 15:30:04 ERROR Exiting with code 1
+
+## Summary
+- Install: ✅ Passed
+- Build: ✅ Passed
+- Tests: ✅ Passed
+- Deploy: ❌ Failed (missing env vars)
+- Exit Code: 1
