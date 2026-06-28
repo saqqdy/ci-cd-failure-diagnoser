@@ -4,14 +4,29 @@
  * @description AI-powered CI/CD failure diagnoser entry point
  */
 
+// Core types
 export * from './models/types'
+
+// Configuration utilities
+export { getDefaultConfig, mergeConfig, validateConfig } from './utils/config'
+
+// Formatting utilities
+export {
+	formatCategory,
+	formatCodeSnippet,
+	formatConfidence,
+	formatDiagnosis,
+	formatDuration,
+	formatLocation,
+	truncate,
+} from './utils/format'
 
 /**
  * Placeholder for diagnose function
  * Will be implemented in Phase 1
  */
 export async function diagnose(_options?: unknown): Promise<void> {
-  console.log('🚧 CI/CD Failure Diagnoser - Phase 0 skeleton')
-  console.log('💡 This functionality is under development')
-  console.log('📋 Next: Phase 1 - Basic diagnosis capability (local file → AI diagnosis)')
+	console.info('🚧 CI/CD Failure Diagnoser - Phase 0 skeleton')
+	console.info('💡 This functionality is under development')
+	console.info('📋 Next: Phase 1 - Basic diagnosis capability (local file → AI diagnosis)')
 }
