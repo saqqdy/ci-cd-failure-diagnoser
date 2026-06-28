@@ -1,0 +1,30 @@
+{
+  "name": "ci-cd-failure-diagnoser",
+  "description": "AI-powered CI/CD failure diagnoser — understand WHY your pipeline failed, not just THAT it failed. Root cause analysis via Claude Code Skill",
+  "owner": {
+    "name": "saqqdy",
+    "url": "https://github.com/saqqdy"
+  },
+  "plugins": [
+    {
+      "name": "ci-cd-failure-diagnoser",
+      "description": "AI-powered CI/CD failure diagnoser — understand WHY your pipeline failed, not just THAT it failed. Root cause analysis via Claude Code Skill",
+      "version": "0.1.0",
+      "author": {
+        "name": "saqqdy",
+        "url": "https://github.com/saqqdy"
+      },
+      "source": "./",
+      "category": "development",
+      "tags": [
+        "ci-cd",
+        "failure-diagnosis",
+        "root-cause-analysis",
+        "flaky-test",
+        "log-analysis",
+        "claude-code",
+        "claude-code-skill"
+      ]
+    }
+  ]
+}

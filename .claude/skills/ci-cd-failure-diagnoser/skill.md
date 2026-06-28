@@ -1,7 +1,7 @@
 ---
 name: ci-cd-failure-diagnoser
 description: CI/CD Failure Diagnoser — 读取 CI 日志，定位失败根因，生成修复建议。支持 GitHub Actions、GitLab CI、Jenkins 及本地日志文件
-version: 0.1.0-alpha.1
+version: 0.1.0
 triggers:
   - /diagnose
 ---
@@ -173,24 +173,21 @@ src/services/UserService.ts(42,15): error TS2322: Type '{ name: string; }' is mi
 
 ## 当前状态
 
-**版本**: 0.1.0-alpha.1 (Phase 0 - 项目骨架)
+**版本**: 0.1.0 (Phase 1 - 本地日志诊断 MVP)
 
 **已实现**:
 - ✅ 核心数据模型定义
-- ✅ 项目骨架搭建
-- ✅ Skill 入口配置
-
-**开发中** (Phase 1):
-- 🚧 本地日志文件读取
-- 🚧 日志预处理
-- 🚧 AI 分类 + 诊断
-- 🚧 结构化诊断输出
+- ✅ 本地日志文件读取（adapters/local.ts）
+- ✅ 日志预处理（ansi-stripper, log-parser, preprocessor）
+- ✅ AI Prompt 模板（classify.md, diagnose.md）
+- ✅ 诊断主函数（diagnose）
+- ✅ 测试日志样本（fixtures）
 
 **计划中**:
-- 📋 GitHub Actions 集成 (Phase 2)
-- 📋 修复建议生成 (Phase 3)
-- 📋 模式引擎 + Flaky 检测 (Phase 4)
-- 📋 GitLab CI + Jenkins 适配 (Phase 5)
+- 📋 GitHub Actions 集成 (Phase 2, v0.2.0)
+- 📋 修复建议生成 (Phase 3, v0.3.0)
+- 📋 模式引擎 + Flaky 检测 (Phase 4, v0.4.0)
+- 📋 GitLab CI + Jenkins 适配 (Phase 5, v0.5.0)
 
 ## 下一步
 

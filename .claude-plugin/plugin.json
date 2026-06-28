@@ -1,0 +1,9 @@
+{
+  "name": "ci-cd-failure-diagnoser",
+  "version": "0.1.0",
+  "description": "AI-powered CI/CD failure diagnoser",
+  "author": { "name": "saqqdy", "url": "https://github.com/saqqdy" },
+  "repository": "https://github.com/saqqdy/ci-cd-failure-diagnoser",
+  "license": "MIT",
+  "keywords": ["ci-cd", "failure-diagnosis", "claude-code", "skill"]
+}
