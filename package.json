@@ -1,8 +1,11 @@
 {
 	"name": "ci-cd-failure-diagnoser",
 	"description": "AI-powered CI/CD failure diagnoser — reads CI logs, identifies root causes, generates fix suggestions via Claude Code Skill",
-	"version": "0.1.0-alpha.1",
+	"version": "0.1.0",
 	"packageManager": "pnpm@9.15.9",
+	"bin": {
+		"ci-cd-failure-diagnoser": "./dist/cli.js"
+	},
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
@@ -14,7 +17,8 @@
 	},
 	"files": [
 		"dist",
-		".claude"
+		".claude",
+		".claude-plugin"
 	],
 	"scripts": {
 		"build": "run-s clean build:bundle build:types",
@@ -28,23 +32,28 @@
 		"test:watch": "vitest",
 		"test:coverage": "vitest run --coverage",
 		"dist": "run-s lint build",
-		"typecheck": "tsc --noEmit"
+		"typecheck": "tsc --noEmit",
+		"docs:dev": "vitepress dev docs",
+		"docs:build": "vitepress build docs",
+		"docs:preview": "vitepress preview docs"
 	},
 	"devDependencies": {
 		"@eslint-sets/eslint-config": "^6.3.1",
-		"@types/node": "^26.0.0",
+		"@types/node": "^26.0.1",
 		"eslint": "^9.39.4",
 		"npm-run-all": "^4.1.5",
-		"prettier": "^3.8.4",
+		"prettier": "^3.9.1",
 		"prettier-config-common": "^1.5.0",
 		"rm-all": "^1.1.1",
 		"tsup": "^8.5.1",
 		"typescript": "^5.9.3",
+		"vitepress": "^1.6.4",
 		"vitest": "^3.2.6"
 	},
 	"engines": {
 		"node": ">=18"
 	},
+	"sideEffects": false,
 	"keywords": [
 		"claude-code",
 		"skill",
@@ -56,8 +65,8 @@
 		"jenkins",
 		"ai"
 	],
-	"author": "saqqdy",
 	"license": "MIT",
+	"author": "saqqdy",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/saqqdy/ci-cd-failure-diagnoser"

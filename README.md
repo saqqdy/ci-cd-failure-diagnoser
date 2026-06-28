@@ -1,200 +1,245 @@
-# CI/CD Failure Diagnoser
+# 🔍 CI/CD Failure Diagnoser
 
-> AI-powered CI/CD failure diagnoser — 读取 CI 日志，定位失败根因，生成修复建议
+> AI-powered CI/CD failure diagnoser — understand **WHY** your pipeline failed, not just **THAT** it failed. Root cause analysis via Claude Code Skill.
 
 [![npm version](https://img.shields.io/npm/v/ci-cd-failure-diagnoser.svg)](https://www.npmjs.com/package/ci-cd-failure-diagnoser)
-[![Node.js Version](https://img.shields.io/node/v/ci-cd-failure-diagnoser.svg)](https://nodejs.org)
-[![License](https://img.shields.io/npm/l/ci-cd-failure-diagnoser.svg)](https://github.com/saqqdy/ci-cd-failure-diagnoser/blob/master/LICENSE)
+[![license](https://img.shields.io/npm/l/ci-cd-failure-diagnoser.svg)](https://github.com/saqqdy/ci-cd-failure-diagnoser/blob/master/LICENSE)
 
-## 简介
+[中文文档](README_CN.md)
 
-CI/CD Failure Diagnoser 是一个 Claude Code Skill 插件，帮助开发者快速定位 CI 失败的根本原因，区分根因错误与级联错误，并生成最小修复方案。
+---
 
-### 核心价值
+## 🎯 The Problem It Solves
 
-| 传统方式 | 本项目 |
-|---------|--------|
-| 手动翻几千行日志 | AI 语义理解，秒级定位根因 |
-| 级联错误混淆判断 | 区分"根因错误 → 级联错误 → 无关警告" |
-| flaky test 反复排查 | 指纹匹配，自动标记已知 flaky |
-| 修复靠经验 | 生成最小修复 PR / patch |
+| Scenario | Traditional CI Logs | CI/CD Failure Diagnoser |
+|----------|---------------------|-------------------------|
+| "What failed?" | Thousands of log lines | AI extracts root cause in seconds |
+| "Root cause vs cascading?" | All errors look equally important | Distinguishes root → cascading → unrelated |
+| "Is this a flaky test?" | Manual retry testing | Fingerprint-based detection + recommendation |
+| "How to fix?" | Experience-based guessing | Generated minimal fix patch/command |
 
-## 安装
+**Core insight**: Failure diagnosis requires understanding **root cause chains**, not just error messages.
+
+---
+
+## ✨ Core Features
+
+### 📋 Log Preprocessing Layer (v0.1.0)
+
+Structured parsing of CI log output:
+
+- **ANSI Stripping** — Clean raw CI log output
+- **Log Parsing** — Extract jobs, steps, error lines
+- **Preprocessor** — Normalize multi-platform formats
+
+### 🧠 AI-Powered Analysis
+
+- **Failure Classification** — compile_error, test_failure, lint_error, etc.
+- **Root Cause Detection** — Trace actual cause from cascading errors
+- **Flaky Test Detection** — Identify intermittent failures with fingerprints
+- **Confidence Scoring** — 🟢🟡🔴 levels based on evidence
+
+### 💡 Actionable Fix Suggestions
+
+- **Code Fixes** — Specific patches and commands
+- **Config Fixes** — Configuration corrections
+- **Dependency Fixes** — Version conflict resolutions
+- **Retry Guidance** — For flaky test scenarios
+
+### 🔄 Interactive Diagnosis Commands
+
+| Command | Description |
+|---------|-------------|
+| `/diagnose <file>` | Diagnose a CI log file, identify root cause |
+| `/retry <test>` | Check if a test is flaky, get retry recommendation |
+| `/fix <error>` | Get specific fix suggestions for error type |
+| `/history <run>` | Show failure pattern history for a run |
+
+---
+
+## 🚀 Getting Started
+
+### Option 1: Claude Code Plugin (Recommended)
+
+This project is a **Claude Code Plugin**. Install via marketplace for one-click setup.
+
+#### Method A: Plugin Marketplace (Recommended)
 
 ```bash
-# 使用 npm
-npm install -g ci-cd-failure-diagnoser
-
-# 使用 pnpm
-pnpm install -g ci-cd-failure-diagnoser
+# In Claude Code, run:
+/plugin marketplace add saqqdy/ci-cd-failure-diagnoser
+/plugin install ci-cd-failure-diagnoser
 ```
 
-## 使用方法
-
-### 在 Claude Code 中使用
-
-安装后，在 Claude Code CLI 中可以使用 `/diagnose` 命令：
+#### Method B: Local Install
 
 ```bash
-# 分析最近一次 CI 失败
-/diagnose
+# 1. Go to your project
+cd your-project
 
-# 分析指定 run
-/diagnose --run 12345678
+# 2. Install npm package
+pnpm add -D ci-cd-failure-diagnoser
 
-# 指定平台
-/diagnose --platform gitlab
-
-# 分析本地日志文件
-/diagnose --file path/to/log.txt
+# 3. Copy plugin files
+mkdir -p .claude/skills
+cp -r node_modules/ci-cd-failure-diagnoser/.claude/skills/ci-cd-failure-diagnoser .claude/skills/
 ```
 
-### 支持的平台
+#### Available Commands
 
-| 优先级 | 平台 | 接入方式 |
-|--------|------|----------|
-| P0 | GitHub Actions | `gh` CLI / REST API |
-| P0 | 本地日志文件 | 文件读取 |
-| P1 | GitLab CI | REST API |
-| P2 | Jenkins | REST API / CLI |
+Type these commands in Claude Code:
 
-## 功能特性
+| Command | Description | Example |
+|---------|-------------|---------|
+| `/diagnose` | Diagnose a CI log file | `/diagnose ci-log.txt` |
+| `/retry` | Check if a test is flaky | `/retry auth.test.ts` |
+| `/fix` | Get fix suggestions | `/fix typescript` |
+| `/history` | Show failure history | `/history run-123` |
 
-### 1. 语义理解
+#### Output Example
 
-理解 CI 日志语义，区分：
-- **根因错误** — 导致失败的真正原因
-- **级联错误** — 由根因引发的后续错误
-- **无关警告** — 不影响构建的警告信息
+```
+/diagnose tests/fixtures/github-actions/typescript-error.txt
 
-### 2. 平台适配
+🔍 Diagnosing CI failure...
 
-支持多种 CI 平台，统一日志格式，屏蔽平台差异。
+📊 Diagnosis:
+  分类: 🔨 编译错误
+  置信度: 🟢 高 (≥80%)
+  失败步骤: Build
 
-### 3. 修复建议
+🔍 Root Cause:
+  TypeScript type error: Type "string" is not assignable to type "number"
 
-根据失败类别生成针对性修复建议：
-- **编译错误** → 生成代码修复 patch
-- **测试失败** → 分析断言失败原因
-- **依赖冲突** → 建议版本调整
-- **环境问题** → 建议配置修正
+📋 Key Evidence:
+  - error TS2322: Type "string" is not assignable to type "number"
+  - src/index.ts:42:10
 
-### 4. Flaky Test 检测
+💡 Fix Suggestion:
+  - Type: code_fix
+  - Change variable type from string to number
+  - Command: npx tsc --noEmit
+```
 
-自动识别 flaky test，避免重复排查：
-- 跨 run 分析测试稳定性
-- 生成 flaky fingerprint
-- 建议重试 / 跳过 / 修复
-
-### 5. 模式学习
-
-重复问题秒级响应：
-- 第一次遇到问题 → AI 全量诊断
-- 第二次遇到相同问题 → 模式匹配，秒级响应
-
-## 支持的失败类别
-
-- `compile_error` — 编译错误
-- `test_failure` — 测试失败
-- `lint_error` — 代码检查失败
-- `env_issue` — 环境问题
-- `timeout` — 超时
-- `dependency_conflict` — 依赖冲突
-- `permission_error` — 权限错误
-- `config_error` — 配置错误
-- `resource_limit` — 资源限制（OOM、磁盘满等）
-- `network_error` — 网络问题
-- `unknown` — 未知
-
-## 开发状态
-
-**当前版本**: 0.1.0-alpha.1 (Phase 0 - 项目骨架)
-
-### 已实现 ✅
-- 核心数据模型定义
-- 项目骨架搭建
-- Skill 入口配置
-
-### 开发中 🚧 (Phase 1)
-- 本地日志文件读取
-- 日志预处理
-- AI 分类 + 诊断
-- 结构化诊断输出
-
-### 计划中 📋
-- GitHub Actions 集成 (Phase 2)
-- 修复建议生成 (Phase 3)
-- 模式引擎 + Flaky 检测 (Phase 4)
-- GitLab CI + Jenkins 适配 (Phase 5)
-
-详见 [开发计划](internal/development-plan.md) 和 [发版计划](internal/release-plan.md)。
-
-## 开发
-
-### 环境要求
-
-- Node.js 18+
-- pnpm 9+
-
-### 本地开发
+### Option 2: Programmatic Usage
 
 ```bash
-# 克隆仓库
+pnpm add ci-cd-failure-diagnoser
+```
+
+```typescript
+import { diagnose, formatDiagnosis, getDefaultConfig } from 'ci-cd-failure-diagnoser'
+
+// Basic diagnosis
+const result = await diagnose({ file: 'ci-log.txt' })
+console.log(formatDiagnosis(result))
+
+// With custom config
+const config = getDefaultConfig()
+const result2 = await diagnose({
+  file: 'ci-log.txt',
+  config,
+})
+
+// Access specific fields
+console.log('Category:', result.rootCause.category)
+console.log('Confidence:', result.rootCause.confidence)
+console.log('Fix:', result.suggestedFix?.description)
+```
+
+### Option 3: CLI (Zero-Install)
+
+```bash
+# In any project, run directly:
+npx ci-cd-failure-diagnoser diagnose ci-log.txt
+npx ci-cd-failure-diagnoser version
+npx ci-cd-failure-diagnoser help
+```
+
+### Option 4: Clone and Run Examples
+
+```bash
 git clone https://github.com/saqqdy/ci-cd-failure-diagnoser.git
 cd ci-cd-failure-diagnoser
-
-# 安装依赖
 pnpm install
 
-# 开发模式
-pnpm dev
-
-# 构建
-pnpm build
-
-# 测试
-pnpm test
-
-# 类型检查
-pnpm typecheck
-
-# 代码检查
-pnpm lint
+# Run examples
+npx tsx examples/basic-usage.ts
+npx tsx examples/with-cache.ts
+npx tsx examples/skill-commands.ts
 ```
 
-### 项目结构
+---
+
+## 📋 Version Roadmap
+
+| Version | Codename | Theme | Status |
+|---------|----------|-------|--------|
+| v0.1.0 | Foundation | Basic diagnosis capability (local file → AI diagnosis) | ✅ Current |
+| v0.2.0 | Pattern Engine | Failure pattern recognition + flaky detection | 📋 Planned |
+| v0.3.0 | Multi-Platform | GitHub Actions/GitLab CI/Jenkins adapters | 📋 Planned |
+| v0.4.0 | Intelligence | Cascading analysis + fix ranking | 📋 Planned |
+| v1.0.0 | Production | Marketplace + enterprise features | 📋 Planned |
+
+---
+
+## 🗂️ Project Structure
 
 ```
 ci-cd-failure-diagnoser/
-├── src/
-│   ├── index.ts           # 入口
-│   ├── models/types.ts    # 核心数据模型
-│   ├── adapters/          # 平台适配器
-│   ├── analyzer/          # 日志分析引擎
-│   ├── patterns/          # 模式引擎
-│   └── fixer/             # 修复建议
-├── .claude/skills/        # Claude Code Skill 定义
-├── tests/                 # 测试
-├── docs/                  # 文档
-└── internal/              # 内部文档
+├── .claude/skills/ci-cd-failure-diagnoser/  # Skill prompts (core product)
+│   └── skill.md                              # Commands + execution flow
+├── src/                                      # TypeScript source
+│   ├── index.ts                              # Public API exports
+│   ├── models/types.ts                       # Core types
+│   ├── errors.ts                             # Custom error types
+│   ├── adapters/                             # CI platform adapters
+│   │   └── local.ts                          # Local file adapter
+│   ├── analyzer/                             # AI analyzer
+│   │   ├── preprocessor.ts                   # Log preprocessing
+│   │   └── prompts/                          # AI prompts
+│   │       ├── classify.md                   # Classification prompt
+│   │       └── diagnose.md                   # Diagnosis prompt
+│   └── utils/                                # Utilities
+│       ├── config.ts                         # Config management
+│       ├── format.ts                         # Output formatting
+│       ├── ansi-stripper.ts                  # ANSI cleaning
+│       └── log-parser.ts                     # Log parsing
+├── tests/                                    # Test files
+├── examples/                                 # Usage examples
+├── docs/                                     # VitePress docs
+└── internal/                                 # Planning docs
 ```
 
-## 贡献
+---
 
-欢迎贡献代码、报告问题或提出建议！
+## 🛠️ Development
 
-请阅读 [贡献指南](CONTRIBUTING.md) 了解详情。
+```bash
+pnpm install          # Install dependencies
+pnpm run lint         # ESLint + auto-fix
+pnpm run typecheck    # TypeScript check
+pnpm run test         # Run tests (vitest)
+pnpm run build        # Build (ESM + CJS)
+pnpm run docs:dev     # Start docs server
+```
 
-## 许可证
+---
 
-[MIT](LICENSE)
+## 🆚 Comparison
 
-## 作者
+### vs Manual Log Analysis
 
-saqqdy
+| Dimension | Manual Analysis | CI/CD Failure Diagnoser |
+|-----------|-----------------|-------------------------|
+| Output | Thousands of log lines | Structured `DiagnosisResult` + fix suggestion |
+| Root Cause? | ❌ Manual search | ✅ AI traces root → cascading chain |
+| Flaky Detection | ❌ Manual retry | ✅ Fingerprint-based detection |
+| Confidence | ❌ No | ✅ 🟢🟡🔴 levels based on evidence |
+| Fix Suggestion | ❌ No | ✅ Generated patch/command |
 
-## 链接
+---
 
-- [GitHub](https://github.com/saqqdy/ci-cd-failure-diagnoser)
-- [npm](https://www.npmjs.com/package/ci-cd-failure-diagnoser)
-- [问题反馈](https://github.com/saqqdy/ci-cd-failure-diagnoser/issues)
+## 📄 License
+
+[MIT](./LICENSE)
